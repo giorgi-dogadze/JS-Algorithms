@@ -10,7 +10,6 @@ const isPrime = () => {
     }
   }
 
-  console.log("counter", counter);
   if (counter == 2) {
     console.log("true");
   } else {
