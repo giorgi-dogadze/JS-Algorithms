@@ -11,8 +11,6 @@ const insertionSort = (arr) => {
 
     arr[j + 1] = numberToInsert;
   }
-
-  console.log("counter", counter);
 };
 
 const arr = [1, 5, 72, 4, 73, 212, 41, 14, 6];
