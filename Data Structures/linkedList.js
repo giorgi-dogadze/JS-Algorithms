@@ -19,7 +19,7 @@ class LinkedList {
     return this.size;
   }
 
-  //   adds item at the end of the list
+  //   adds item at the end of the list O(1s)
   prepend(element) {
     const node = new Node(element);
 
@@ -32,7 +32,7 @@ class LinkedList {
     this.size++;
   }
 
-  // adds item at the end of the list
+  // adds item at the end of the list O(n)
   append(element) {
     const node = new Node(element);
     if (this.isEmpty()) {
@@ -47,6 +47,26 @@ class LinkedList {
       curr.next = node;
     }
     this.size++;
+  }
+
+  insert(element, index) {
+    if (index < 0 || index > this.size - 1) {
+      console.log("incorrect index");
+    } else if (index === 0) {
+      this.prepend(element);
+    } else {
+      const node = new Node(element);
+      let previous = this.head;
+
+      for (let i = 0; i < index - 1; i++) {
+        previous = previous.next;
+      }
+
+      node.next = previous.next;
+      previous.next = node;
+
+      this.size++;
+    }
   }
 
   print() {
@@ -71,6 +91,9 @@ list.prepend(1);
 list.prepend(2);
 list.prepend(3);
 list.prepend(4);
+
 list.append(5);
+
+list.insert(0, 2);
 
 list.print();
