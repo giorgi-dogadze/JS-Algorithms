@@ -71,6 +71,22 @@ class BinaryTree {
       this.preOrder(root.right);
     }
   }
+
+  inOrder(root) {
+    if (root) {
+      this.inOrder(root.left);
+      console.log(root.value);
+      this.inOrder(root.right);
+    }
+  }
+
+  postOrder(root) {
+    if (root) {
+      this.postOrder(root.left);
+      this.postOrder(root.right);
+      console.log(root.value);
+    }
+  }
 }
 
 const tree = new BinaryTree();
@@ -82,3 +98,7 @@ tree.insert(1);
 
 console.log("tree.search(15)", tree.search(tree.root, 1));
 tree.preOrder(tree.root); // 10 -> 5 -> 1 -> 13
+console.log("-------");
+tree.inOrder(tree.root); // 1 -> 5 -> 10 -> 13
+console.log("-------");
+tree.postOrder(tree.root); // 1 -> 5 -> 13 -> 10
