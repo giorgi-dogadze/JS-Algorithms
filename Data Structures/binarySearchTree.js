@@ -3,7 +3,8 @@
 // DFS
 // BFS
 // Deletion
-
+// DFS - > Depth first Search ჩადის ბოლომდე მარცხნიდან მერე ერთით ზემოთ ამოდის და ყველა შვილს ნახულობს და ა.შ
+// DFS: Preorder
 class Node {
   constructor(value) {
     {
@@ -53,7 +54,6 @@ class BinaryTree {
     if (!root) {
       return false;
     } else {
-      console.log("root.value", root.value);
       if (root.value === value) {
         return true;
       } else if (value < root.value) {
@@ -63,13 +63,22 @@ class BinaryTree {
       }
     }
   }
+
+  preOrder(root) {
+    if (root) {
+      console.log(root.value);
+      this.preOrder(root.left);
+      this.preOrder(root.right);
+    }
+  }
 }
 
 const tree = new BinaryTree();
 
 tree.insert(10);
 tree.insert(5);
-tree.insert(1);
 tree.insert(13);
+tree.insert(1);
 
 console.log("tree.search(15)", tree.search(tree.root, 1));
+tree.preOrder(tree.root); // 10 -> 5 -> 1 -> 13
