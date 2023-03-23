@@ -19,18 +19,45 @@ class HashTable {
 
   set(key, value) {
     const index = this.hash(key);
-    console.log("key", index, "value", value);
-    this.table[index] = value;
+    // this.table[index] = value;
+    let bucket = this.table[index];
+    if (!bucket) {
+      this.table[index] = [[key, value]];
+    } else {
+      let itemWithSameKey = bucket.find((item) => item[0] === key);
+      if (itemWithSameKey) {
+        itemWithSameKey[1] = value;
+      } else {
+        bucket.push([key, value]);
+      }
+    }
   }
 
   get(key) {
     const index = this.hash(key);
-    return this.table[index];
+    let bucket = this.table[index];
+    if (bucket) {
+      let itemWithSameKey = bucket.find((item) => item[0] === key);
+      if (itemWithSameKey) {
+        return itemWithSameKey[1];
+      }
+    }
+
+    return undefined;
   }
 
   remove(key) {
     const index = this.hash(key);
-    this.table[index] = undefined;
+    // this.table[index] = undefined;
+    let bucket = this.table[index];
+
+    if (bucket) {
+      let itemWithSameKey = bucket.find((item) => item[0] === key);
+      if (itemWithSameKey) {
+        bucket.splice(bucket.indexOf(itemWithSameKey), 1);
+      }
+      return undefined;
+    }
   }
 
   display() {
@@ -45,8 +72,14 @@ class HashTable {
 const hastTable = new HashTable(5);
 
 hastTable.set("gio", 22);
-hastTable.set("takole", 26);
+hastTable.set("tako", 26);
 hastTable.set("zaza", 55);
-hastTable.set("tako", 52);
+hastTable.set("xato", 52);
+hastTable.set("taxo", 52);
 
+hastTable.set("gio", 20);
+console.log("xato", hastTable.get("xato"));
+hastTable.display();
+console.log("------");
+hastTable.remove("taxo");
 hastTable.display();
