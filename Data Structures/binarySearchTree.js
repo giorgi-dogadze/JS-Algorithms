@@ -5,6 +5,12 @@
 // Deletion
 // DFS - > Depth first Search ჩადის ბოლომდე მარცხნიდან მერე ერთით ზემოთ ამოდის და ყველა შვილს ნახულობს და ა.შ
 // DFS: Preorder
+
+// Deletion, 3 scenarios:
+// 1. remove lead
+// 2. remove node with 1 child
+// 3. remove 2 node - replace it with inOrder successor.
+
 class Node {
   constructor(value) {
     {
@@ -110,7 +116,7 @@ class BinaryTree {
       min = root.value;
       root = root.left;
     }
-    console.log(min);
+    return min;
   }
 
   maxValue(root) {
@@ -119,7 +125,39 @@ class BinaryTree {
       max = root.value;
       root = root.right;
     }
-    console.log(max);
+    return max;
+  }
+
+  delete(value) {
+    this.root = this.deleteNode(this.root, value);
+  }
+
+  deleteNode(root, value) {
+    if (root === null) {
+      return root;
+    }
+    if (value < root.value) {
+      root.left = this.deleteNode(root.left, value);
+    } else if (value > root.value) {
+      root.right = this.deleteNode(root.right, value);
+    } else {
+      if (!root.left && !root.right) {
+        //has no child
+        return null;
+      }
+
+      if (!root.left) {
+        //has only right child
+        return root.right;
+      } else if (!root.right) {
+        //has only right child
+        return root.left;
+      }
+
+      root.value = this.minValue(root.right);
+      root.right = this.deleteNode(root.right, root.value);
+    }
+    return root;
   }
 }
 
@@ -138,14 +176,21 @@ tree.inOrderDFS(tree.root); // 1 -> 5 -> 10 -> 13
 console.log("---postOrderDFS----");
 tree.postOrderDFS(tree.root); // 1 -> 5 -> 13 -> 10
 
+console.log("---minValue----");
+console.log(tree.minValue(tree.root)); // 1
+
+console.log("---maxValue----");
+console.log(tree.maxValue(tree.root)); // 13
+
 console.log("---levelOrderBFS----");
 tree.levelOrderBFS(tree.root); // 10 -> 5 -> 13 -> 1
 
-console.log("---minValue----");
-tree.minValue(tree.root); // 1
+console.log("---delete----");
+tree.delete(1);
 
-console.log("---maxValue----");
-tree.maxValue(tree.root); // 13
+console.log("---levelOrderBFS----");
+tree.levelOrderBFS(tree.root); // 10 -> 5 -> 13
+
 //      10
 //   5      13
 // 1
