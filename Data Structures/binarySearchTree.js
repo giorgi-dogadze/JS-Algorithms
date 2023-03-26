@@ -64,28 +64,62 @@ class BinaryTree {
     }
   }
 
-  preOrder(root) {
+  preOrderDFS(root) {
     if (root) {
       console.log(root.value);
-      this.preOrder(root.left);
-      this.preOrder(root.right);
+      this.preOrderDFS(root.left);
+      this.preOrderDFS(root.right);
     }
   }
 
-  inOrder(root) {
+  inOrderDFS(root) {
     if (root) {
-      this.inOrder(root.left);
+      this.inOrderDFS(root.left);
       console.log(root.value);
-      this.inOrder(root.right);
+      this.inOrderDFS(root.right);
     }
   }
 
-  postOrder(root) {
+  postOrderDFS(root) {
     if (root) {
-      this.postOrder(root.left);
-      this.postOrder(root.right);
+      this.postOrderDFS(root.left);
+      this.postOrderDFS(root.right);
       console.log(root.value);
     }
+  }
+
+  levelOrderBFS() {
+    const queue = [];
+    queue.push(this.root);
+
+    while (queue.length) {
+      const curr = queue.shift();
+      console.log(curr.value);
+      if (curr.left) {
+        queue.push(curr.left);
+      }
+      if (curr.right) {
+        queue.push(curr.right);
+      }
+    }
+  }
+
+  minValue(root) {
+    let min;
+    while (root) {
+      min = root.value;
+      root = root.left;
+    }
+    console.log(min);
+  }
+
+  maxValue(root) {
+    let max;
+    while (root) {
+      max = root.value;
+      root = root.right;
+    }
+    console.log(max);
   }
 }
 
@@ -97,8 +131,21 @@ tree.insert(13);
 tree.insert(1);
 
 console.log("tree.search(15)", tree.search(tree.root, 1));
-tree.preOrder(tree.root); // 10 -> 5 -> 1 -> 13
-console.log("-------");
-tree.inOrder(tree.root); // 1 -> 5 -> 10 -> 13
-console.log("-------");
-tree.postOrder(tree.root); // 1 -> 5 -> 13 -> 10
+console.log("---preOrderDFS----");
+tree.preOrderDFS(tree.root); // 10 -> 5 -> 1 -> 13
+console.log("----inOrderDFS---");
+tree.inOrderDFS(tree.root); // 1 -> 5 -> 10 -> 13
+console.log("---postOrderDFS----");
+tree.postOrderDFS(tree.root); // 1 -> 5 -> 13 -> 10
+
+console.log("---levelOrderBFS----");
+tree.levelOrderBFS(tree.root); // 10 -> 5 -> 13 -> 1
+
+console.log("---minValue----");
+tree.minValue(tree.root); // 1
+
+console.log("---maxValue----");
+tree.maxValue(tree.root); // 13
+//      10
+//   5      13
+// 1
